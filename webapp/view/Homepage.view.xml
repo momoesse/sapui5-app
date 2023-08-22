@@ -12,7 +12,7 @@
 			<f:title>
 				<f:DynamicPageTitle>
 					<f:heading>
-						<Title text="{i18n>orders}"/>
+						<Title text="{i18n>products}"/>
 					</f:heading>
 					<f:breadcrumbs>
 						<Breadcrumbs>
@@ -51,37 +51,29 @@
 			<f:header>
 				<f:DynamicPageHeader pinnable="true">
 					<f:content>
-                        <fb:FilterBar id="filterbar" persistencyKey="myPersKey" useToolbar="false" search=".onSearch" filterChange=".onFilterChange">
+                        <fb:FilterBar id="filterbar" persistencyKey="myPersKey" useToolbar="false" search=".onSearch" filterChange=".onFilterChange" showClearOnFB="true">
 							<fb:filterGroupItems>
-								<fb:FilterGroupItem name="Order ID" label="{i18n>orderID}" groupName="Group1" visibleInFilterBar="true">
+								<fb:FilterGroupItem name="Product Name" label="{i18n>productName}" groupName="Group1" visibleInFilterBar="true">
 									<fb:control>
 										<MultiInput
-                                            id="idFBOrderID"
+                                            id="idFBProductName"
                                             change="onSearch"
-                                            placeholder="{i18n>enterOrderID}">
+                                            placeholder="{i18n>enterProductName}">
 	                                	</MultiInput>
 									</fb:control>
 								</fb:FilterGroupItem>
-								<fb:FilterGroupItem name="Order Date" label="{i18n>orderDate}" groupName="Group1" visibleInFilterBar="true">
-									<fb:control>
-										<DatePicker
-                                            id="idFBOrderDate"
-                                            placeholder="Enter Date"
-                                            change="handleChange" />
-									</fb:control>
-								</fb:FilterGroupItem>
-								<fb:FilterGroupItem name="Customer ID" label="{i18n>customerID}" groupName="Group1" visibleInFilterBar="true">
+								<fb:FilterGroupItem name="Supplier ID" label="{i18n>supplierID}" groupName="Group1" visibleInFilterBar="true">
 									<fb:control>
 										<MultiComboBox
-                                            id="idFBCustomerID"
-                                            placeholder="{i18n>enterCustomerID}"
+                                            id="idFBSupplierID"
+                                            placeholder="{i18n>enterSupplierID}"
                                             selectionChange="handleSelectionChange"
                                             selectionFinish="handleSelectionFinish"
                                             showSelectAll="true"
                                             items="{
-                                                path: 'oOrdersModel>/Orders'
+                                                path: 'oOrdersModel>/Products'
                                             }">
-                                            <core:Item key="{oOrdersModel>CustomerID}" text="{oOrdersModel>CustomerID}"/>
+                                            <core:Item key="{oOrdersModel>SupplierID}" text="{oOrdersModel>SupplierID}"/>
                                         </MultiComboBox>
 									</fb:control>
 								</fb:FilterGroupItem>
@@ -95,7 +87,7 @@
 						sticky="HeaderToolbar,ColumnHeaders"
 						inset="false"
 						items="{
-                            path: 'oOrdersModel>/Orders'
+                            path: 'oOrdersModel>/Products'
                         }"
                         mode="SingleSelectLeft"
 					    class="sapFDynamicPageAlignContent"
@@ -103,43 +95,43 @@
 					<headerToolbar>
 						<OverflowToolbar>
                             <content>
-                                <Title text="{i18n>ordersTableTitle}" level="H2" />
+                                <Title text="{i18n>productsTableTitle}" level="H2" />
                                 <ToolbarSpacer />
-                                <Button icon="sap-icon://add" tooltip="{i18n>addTableRow}" />
-                                <Button icon="sap-icon://edit" tooltip="{i18n>editTableRow}" />
-                                <Button icon="sap-icon://delete" tooltip="{i18n>deleteTableRow}" />
+                                <Button icon="sap-icon://add" tooltip="{i18n>addNewProduct}" press="onPressAddOrder" />
+                                <Button icon="sap-icon://edit" tooltip="{i18n>editProduct}" press="onPressEditOrder" />
+                                <Button icon="sap-icon://delete" tooltip="{i18n>deleteProduct}" press="onPressDeleteOrder" />
                             </content>
 						</OverflowToolbar>
 					</headerToolbar>
 					<columns>
                         <Column>
-							<Text text="{i18n>orderID}" />
+							<Text text="{i18n>product}" />
 						</Column>
 						<Column minScreenWidth="Desktop" demandPopin="true">
-							<Text text="{i18n>orderDate}" />
+							<Text text="{i18n>quantityPerUnit}" />
 						</Column>
                         <Column minScreenWidth="Desktop" demandPopin="true">
-							<Text text="{i18n>customerID}" />
+							<Text text="{i18n>unitPrice}" />
 						</Column>
 						<Column minScreenWidth="Desktop" demandPopin="true">
-							<Text text="{i18n>shipCountry}" />
+							<Text text="{i18n>unitsInStock}" />
 						</Column>
 						<Column minScreenWidth="Desktop" demandPopin="true">
-							<Text text="{i18n>shipCity}" />
+							<Text text="{i18n>unitsOnOrder}" />
 						</Column>
 						<Column minScreenWidth="Desktop" demandPopin="true">
-							<Text text="{i18n>shipAddress}" />
+							<Text text="{i18n>supplierID}" />
 						</Column>
 					</columns>
 					<items>
 						<ColumnListItem type="Navigation" press="handleItemPress">
 							<cells>
-								<ObjectIdentifier title="{oOrdersModel>OrderID}"/>
-                                <Text text="{oOrdersModel>OrderDate}" />
-                                <Text text="{oOrdersModel>CustomerID}" />
-								<Text text="{oOrdersModel>ShipCountry}" /> 
-								<Text text="{oOrdersModel>ShipCity}" /> 
-                                <Text text="{oOrdersModel>ShipAddress}" /> 
+								<ObjectIdentifier title="{oOrdersModel>ProductID}" text="{oOrdersModel>ProductName}" />
+                                <Text text="{oOrdersModel>QuantityPerUnit}" />
+								<Text text="{oOrdersModel>UnitPrice}" /> 
+								<Text text="{oOrdersModel>UnitsInStock}" /> 
+                                <Text text="{oOrdersModel>UnitsOnOrder}" /> 
+								<Text text="{oOrdersModel>SupplierID}" />
 							</cells>
 						</ColumnListItem>
 					</items>

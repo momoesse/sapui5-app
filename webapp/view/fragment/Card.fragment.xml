@@ -7,9 +7,8 @@
 			<f:Card width="300px">
 				<f:header>
 					<card:NumericHeader
-						title="Sales Revenue"
-						subtitle="Sales revenue in the current quarter"
-						unitOfMeasurement="EUR"
+						title="CRUD Operations"
+						subtitle="Perform Create, Read, Update, and Delete operations on data from the Northwind OData services"
 						number="2.16"
 						scale="M"
 						trend="Down"
