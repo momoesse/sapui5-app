@@ -139,8 +139,8 @@
 								<ObjectIdentifier title="{oOrdersModel>OrderID}"/>
                                 <Text text="{oOrdersModel>OrderDate}" />
 								<Text text="{oOrdersModel>ShipCountry}" /> 
-								<Text text="{oOrdersModel>ShipCity}" />
-                                <Text text="{oOrdersModel>ShipAddress}" />
+								<Text text="{oOrdersModel>ShipCity}" /> 
+                                <Text text="{oOrdersModel>ShipAddress}" /> 
 							</cells>
 						</ColumnListItem>
 					</items>
