@@ -3,141 +3,140 @@
 		xmlns:mvc="sap.ui.core.mvc"
 		xmlns="sap.m"
 		xmlns:f="sap.f"
+        xmlns:fb="sap.ui.comp.filterbar"
+        xmlns:core="sap.ui.core"
 		xmlns:layout="sap.ui.layout"
 		height="100%">
-		<f:DynamicPage id="dynamicPageId" headerExpanded="{/headerExpanded}" toggleHeaderOnTitleClick="{/titleClickable}">
+		<f:DynamicPage id="dynamicPageId" showFooter="false" headerExpanded="{/headerExpanded}" toggleHeaderOnTitleClick="{/titleClickable}">
 			<!-- DynamicPage Title -->
 			<f:title>
 				<f:DynamicPageTitle>
 					<f:heading>
-						<Title text="Header Title"/>
+						<Title text="{i18n>orders}"/>
 					</f:heading>
 					<f:breadcrumbs>
 						<Breadcrumbs>
 							<Link text="Home" />
-							<Link text="Page 1" />
-							<Link text="Page 2" />
-							<Link text="Page 3" />
-							<Link text="Page 4" />
-							<Link text="Page 5" />
 						</Breadcrumbs>
 					</f:breadcrumbs>
 					<f:expandedContent>
-						<Label text="This is a subheading"/>
+						<Label text="{i18n>subheading}"/>
 					</f:expandedContent>
 					<f:snappedContent>
-						<Label text="This is a subheading"/>
+						<Label text="{i18n>subheading}"/>
 					</f:snappedContent>
 					<f:snappedTitleOnMobile>
-						<Title text="This is a subheading"/>
+						<Title text="{i18n>subheading}"/>
 					</f:snappedTitleOnMobile>
 					<f:content>
 						<OverflowToolbar>
-							<GenericTag text="SR"
-								status="Error"
+							<GenericTag text="INFO"
+								status="Information"
 								press="onPressOpenPopover"
-								design="StatusIconHidden">
-								<ObjectNumber number="2"
-									unit="M"
-									emphasized="false"
-									state="Error"/>
+								design="Full">
 							</GenericTag>
 						</OverflowToolbar>
 					</f:content>
 					<f:actions>
 						<Button
-								text="Edit"
-								type="Emphasized"
-								press="toggleAreaPriority"/>
-						<Button
-								text="Delete"
-								type="Transparent"/>
-						<Button
-								text="Copy"
-								type="Transparent"/>
-						<Button
-								text="Toggle Footer"
+								text="{i18n>toggleFooter}"
 								type="Transparent"
 								press="onToggleFooter"/>
-						<Button
-								icon="sap-icon://action"
-								type="Transparent"/>
-						<Button
-								text="Button with layoutData"
-								type="Transparent"
-								press="onPressOpenPopover">
-							<layoutData>
-								<OverflowToolbarLayoutData priority="AlwaysOverflow" closeOverflowOnInteraction="false" />
-							</layoutData>
-						</Button>
 					</f:actions>
 					<f:navigationActions>
-						<Button
-								icon="sap-icon://full-screen"
-								type="Transparent" />
-						<Button
-								icon="sap-icon://decline"
-								type="Transparent" />
 					</f:navigationActions>
 				</f:DynamicPageTitle>
 			</f:title>
 			<!-- DynamicPage Header -->
 			<f:header>
 				<f:DynamicPageHeader pinnable="true">
-					<layout:HorizontalLayout allowWrapping="true">
-						<layout:VerticalLayout class="sapUiMediumMarginEnd">
-							<ObjectAttribute title="Location" text="Warehouse A"/>
-							<ObjectAttribute title="Halway" text="23L"/>
-							<ObjectAttribute title="Rack" text="34"/>
-						</layout:VerticalLayout>
-
-						<layout:VerticalLayout>
-							<ObjectAttribute title="Availability"/>
-							<ObjectStatus text="In Stock" state="Success" />
-						</layout:VerticalLayout>
-					</layout:HorizontalLayout>
+					<f:content>
+                        <fb:FilterBar id="filterbar" persistencyKey="myPersKey" useToolbar="false" search=".onSearch" filterChange=".onFilterChange">
+							<fb:filterGroupItems>
+								<fb:FilterGroupItem name="Order ID" label="{i18n>orderID}" groupName="Group1" visibleInFilterBar="true">
+									<fb:control>
+										<MultiInput
+                                            id="idFBOrderID"
+                                            change="onSearch"
+                                            placeholder="{i18n>enterOrderID}">
+	                                	</MultiInput>
+									</fb:control>
+								</fb:FilterGroupItem>
+								<fb:FilterGroupItem name="Order Date" label="{i18n>orderDate}" groupName="Group1" visibleInFilterBar="true">
+									<fb:control>
+										<DatePicker
+                                            id="idFBOrderDate"
+                                            placeholder="Enter Date"
+                                            change="handleChange" />
+									</fb:control>
+								</fb:FilterGroupItem>
+								<fb:FilterGroupItem name="Customer ID" label="{i18n>customerID}" groupName="Group1" visibleInFilterBar="true">
+									<fb:control>
+										<MultiComboBox
+                                            id="idFBCustomerID"
+                                            placeholder="{i18n>enterCustomerID}"
+                                            selectionChange="handleSelectionChange"
+                                            selectionFinish="handleSelectionFinish"
+                                            showSelectAll="true"
+                                            items="{
+                                                path: 'oOrdersModel>/Orders'
+                                            }">
+                                            <core:Item key="{oOrdersModel>CustomerID}" text="{oOrdersModel>CustomerID}"/>
+                                        </MultiComboBox>
+									</fb:control>
+								</fb:FilterGroupItem>
+							</fb:filterGroupItems>
+						</fb:FilterBar>
+                    </f:content>
 				</f:DynamicPageHeader>
 			</f:header>
 			<f:content>
-				<Table id="idProductsTable"
+				<Table id="idOrdersTable"
 						sticky="HeaderToolbar,ColumnHeaders"
 						inset="false"
 						items="{
                             path: 'oOrdersModel>/Orders'
                         }"
-					   class="sapFDynamicPageAlignContent"
-					   width="auto">
+                        mode="SingleSelectLeft"
+					    class="sapFDynamicPageAlignContent"
+					    width="auto">
 					<headerToolbar>
-						<Toolbar>
-							<Title text="Products" level="H2"/>
-						</Toolbar>
+						<OverflowToolbar>
+                            <content>
+                                <Title text="{i18n>ordersTableTitle}" level="H2" />
+                                <ToolbarSpacer />
+                                <Button icon="sap-icon://add" tooltip="{i18n>addTableRow}" />
+                                <Button icon="sap-icon://edit" tooltip="{i18n>editTableRow}" />
+                                <Button icon="sap-icon://delete" tooltip="{i18n>deleteTableRow}" />
+                            </content>
+						</OverflowToolbar>
 					</headerToolbar>
 					<columns>
-						<Column
-								width="12em">
-							<Text text="Product" />
+                        <Column>
+							<Text text="{i18n>orderID}" />
 						</Column>
-						<Column
-								minScreenWidth="Tablet"
-								demandPopin="true">
-							<Text text="Supplier" />
+						<Column minScreenWidth="Desktop" demandPopin="true">
+							<Text text="{i18n>orderDate}" />
 						</Column>
-						<Column
-								minScreenWidth="Tablet"
-								demandPopin="true"
-								hAlign="End">
-							<Text text="Dimensions" />
+                        <Column minScreenWidth="Desktop" demandPopin="true">
+							<Text text="{i18n>customerID}" />
 						</Column>
-						<Column
-								hAlign="End">
-							<Text text="Price" />
+						<Column minScreenWidth="Desktop" demandPopin="true">
+							<Text text="{i18n>shipCountry}" />
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="true">
+							<Text text="{i18n>shipCity}" />
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="true">
+							<Text text="{i18n>shipAddress}" />
 						</Column>
 					</columns>
 					<items>
-						<ColumnListItem>
+						<ColumnListItem type="Navigation" press="handleItemPress">
 							<cells>
 								<ObjectIdentifier title="{oOrdersModel>OrderID}"/>
                                 <Text text="{oOrdersModel>OrderDate}" />
+                                <Text text="{oOrdersModel>CustomerID}" />
 								<Text text="{oOrdersModel>ShipCountry}" /> 
 								<Text text="{oOrdersModel>ShipCity}" /> 
                                 <Text text="{oOrdersModel>ShipAddress}" /> 
@@ -149,14 +148,12 @@
 			<!-- DynamicPage Footer -->
 			<f:footer>
 				<OverflowToolbar>
-					<Button icon="sap-icon://message-popup"
-							text="{/messagesLength}"
-							type="Emphasized"
-							press="onMessageButtonPress"
-							visible="{= !!${/messagesLength}}"/>
-					<ToolbarSpacer/>
-					<Button type="Accept" text="Accept"/>
-					<Button type="Reject" text="Reject"/>
+                    <FlexBox
+                        alignItems="Center"
+                        justifyContent="End">
+                        <Button type="Accept" text="Accept" class="sapUiSmallMarginEnd" />
+					    <Button type="Reject" text="Reject" />
+			        </FlexBox>	
 				</OverflowToolbar>
 			</f:footer>
 		</f:DynamicPage>
