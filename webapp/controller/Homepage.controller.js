@@ -128,7 +128,7 @@ sap.ui.define([
 
             handleSavePress: function () {
                 let oNewProductData = this.getView().getModel("oAddProductModel").getData();
-                oNewProductData.ID = Math.round(Math.random() * 1000); 
+                oNewProductData.ID = Math.round(Math.random() * 1000);
 
                 this.oDataCreate(oNewProductData);
             },
@@ -137,7 +137,7 @@ sap.ui.define([
                 let oDataModel = new sap.ui.model.odata.v2.ODataModel(sUrl, true),
                     that = this;
                 oDataModel.setHeaders({ "Content-ID": 1 });
-                return new Promise (function (resolve, reject) {
+                return new Promise(function (resolve, reject) {
                     oDataModel.create(sEntitySet, oNewProductData, {
                         success: function (response) {
                             resolve(response);
@@ -168,7 +168,43 @@ sap.ui.define([
             },
 
             onPressDeleteOrder: function () {
+                let oTable = this.getView().byId("idProductsTable");
+                if (oTable.getSelectedItem() !== null) {
+                    MessageBox.warning("The selected product will be permanently removed. Do you want to continue?", {
+                        actions: ["YES", "NO"],
+                        onClose: async function (sAction) {
+                            if (sAction === "YES") {
+                                let iID = oTable.getSelectedItem().getBindingContext("oProductsModel").getObject().ID;
+                                this.oDataRemove(iID);
+                            }
+                        }.bind(this)
+                    });
+                } else {
+                    MessageBox.information("Please select a product to proceed");
+                }
+            },
 
+            oDataRemove: function (iID) {
+                let oDataModel = new sap.ui.model.odata.v2.ODataModel(sUrl),
+                    that = this;
+                oDataModel.setHeaders({ "Content-ID": 1 });
+                return new Promise(function (resolve, reject) {
+                    oDataModel.remove(("/Products(" + iID + ")"), {
+                        success: function (oData) {
+                            MessageBox.success("Product successfully removed", {
+                                actions: [MessageBox.Action.OK],
+                                onClose: function () {
+                                    that._readProductsData();
+                                }.bind(this)
+                            });
+                            resolve(oData);
+                        }.bind(this),
+                        error: function (error) {
+                            MessageBox.error("Error");
+                            reject(error); 
+                        }.bind(this)
+                    });
+                })
             },
         });
     });
