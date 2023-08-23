@@ -32,6 +32,7 @@ sap.ui.define([
                     success: function (oData) {
                         let oDataOrders = oData.results,
                             oModel = new JSONModel();
+                        this.setTableMode(oDataOrders);
                         oModel.setProperty("/Products", oDataOrders);
                         this.getView().setModel(oModel, "oProductsModel");
                     }.bind(this),
@@ -39,6 +40,10 @@ sap.ui.define([
                         MessageBox.error("Error");
                     }.bind(this)
                 });
+            },
+
+            setTableMode: function (oDataOrders) {
+                oDataOrders.forEach(product => product.Mode = "Read");
             },
 
             onSearch: function () {
@@ -164,7 +169,15 @@ sap.ui.define([
             },
 
             onPressEditOrder: function () {
-
+                let oTable = this.getView().byId("idProductsTable");
+                if (oTable.getSelectedItem() !== null) {
+                    let oObject = oTable.getSelectedItem().getBindingContext("oProductsModel").getObject();
+                    oObject.Mode = "Edit";
+                    this.getView().getModel("oProductsModel").refresh();
+                    this.onToggleFooter();
+                } else {
+                    this.showInfoMessage();
+                }
             },
 
             onPressDeleteOrder: function () {
@@ -180,8 +193,12 @@ sap.ui.define([
                         }.bind(this)
                     });
                 } else {
-                    MessageBox.information("Please select a product to proceed");
+                    this.showInfoMessage();
                 }
+            },
+
+            showInfoMessage: function () {
+                MessageBox.information("Please select a product to proceed");
             },
 
             oDataRemove: function (iID) {
@@ -201,10 +218,45 @@ sap.ui.define([
                         }.bind(this),
                         error: function (error) {
                             MessageBox.error("Error");
-                            reject(error); 
+                            reject(error);
                         }.bind(this)
                     });
                 })
+            },
+
+            handleEditSavePress: function () {
+                let oDataModel = new sap.ui.model.odata.v2.ODataModel(sUrl),
+                    that = this,
+                    oTable = this.getView().byId("idProductsTable"),
+                    iID,
+                    oObject;
+                iID = oTable.getSelectedItem().getBindingContext("oProductsModel").getObject().ID;
+                oObject = oTable.getSelectedItem().getBindingContext("oProductsModel").getObject();
+                delete oObject.Mode;
+                oDataModel.setHeaders({ "Content-ID": 1 });
+                oDataModel.update(("/Products(" + iID + ")"), oObject, {
+                    success: function (oData) {
+                        MessageBox.success("Product successfully updated", {
+                            actions: [MessageBox.Action.OK],
+                            onClose: function () {
+                                that.handleEditCancelPress();
+                                that._readProductsData();
+                            }.bind(this)
+                        });
+                    }.bind(this),
+                    error: function (oError) {
+                        MessageBox.error("Error");
+                    }.bind(this)
+                });
+            },
+
+            handleEditCancelPress: function () {
+                let oTable = this.getView().byId("idProductsTable"),
+                    oObject;
+                oObject = oTable.getSelectedItem().getBindingContext("oProductsModel").getObject();
+                oObject.Mode = "Read";
+                this.getView().getModel("oProductsModel").refresh();
+                this.onToggleFooter();
             },
         });
     });

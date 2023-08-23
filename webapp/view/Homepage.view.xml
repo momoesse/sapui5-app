@@ -136,16 +136,28 @@
 							<cells>
 							 	<Text text="{oProductsModel>ID}" />
 								<ObjectIdentifier title="{oProductsModel>Name}" text="{oProductsModel>Description}" />
-								<Text text="{oProductsModel>Price}" /> 
-								<Text text="{oProductsModel>Rating}" /> 
-                                <Text text="{
+								<VBox>
+									<Text text="{oProductsModel>Price}" visible="{ path: 'oProductsModel>Mode', formatter: '.formatter.setReadVisible' }" />
+									<Input value="{oProductsModel>Price}" type="Number" visible="{ path: 'oProductsModel>Mode', formatter: '.formatter.setEditVisible' }" /> 
+								</VBox>
+								<VBox>
+									<Text text="{oProductsModel>Rating}" visible="{ path: 'oProductsModel>Mode', formatter: '.formatter.setReadVisible' }" /> 
+									<StepInput value="{oProductsModel>Rating}" visible="{ path: 'oProductsModel>Mode', formatter: '.formatter.setEditVisible' }" /> 
+								</VBox>
+								<Text text="{
 									path: 'oProductsModel>ReleaseDate',
 									formatter: '.formatter.formatDate'
-								}" /> 
-								<Text text="{
-									path: 'oProductsModel>DiscontinuedDate',
-									formatter: '.formatter.formatDate'
 								}" />
+								<VBox>
+									<Text text="{
+										path: 'oProductsModel>DiscontinuedDate',
+										formatter: '.formatter.formatDate'
+									}" visible="{ path: 'oProductsModel>Mode', formatter: '.formatter.setReadVisible' }" />
+									<DatePicker value="{
+										path: 'oProductsModel>DiscontinuedDate',
+										formatter: '.formatter.formatDate'
+									}" visible="{ path: 'oProductsModel>Mode', formatter: '.formatter.setEditVisible' }" />
+								</VBox>
 							</cells>
 						</ColumnListItem>
 					</items>
@@ -157,8 +169,8 @@
                     <FlexBox
                         alignItems="Center"
                         justifyContent="End">
-                        <Button type="Accept" text="Accept" class="sapUiSmallMarginEnd" />
-					    <Button type="Reject" text="Reject" />
+                        <Button type="Accept" text="{i18n>save}" class="sapUiSmallMarginEnd" press="handleEditSavePress" />
+					    <Button type="Reject" text="{i18n>cancel}" press="handleEditCancelPress" />
 			        </FlexBox>	
 				</OverflowToolbar>
 			</f:footer>

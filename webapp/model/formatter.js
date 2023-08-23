@@ -13,7 +13,15 @@ sap.ui.define([], function () {
                     return Date;
                 }
             }
-        }
+        },
+
+        setReadVisible: function (sMode) {
+           return sMode === "Read" && true;
+        },
+
+        setEditVisible: function (sMode) {
+            return sMode === "Edit" && true;
+        },
     }
 });
     
