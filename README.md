@@ -4,6 +4,9 @@ Welcome to the SAP Fiori Application! This app showcases how to perform Create, 
 
 # Project Overview
 
+<img width="1456" alt="Homepage" src="https://github.com/momoesse/fiori-app/assets/112439372/c0d33e6b-f228-49ed-861c-f462439113b9">
+
+
 ## Features
 - CRUD Operations: Perform Create, Read, Update, and Delete operations on data from the Northwind OData services
 - Responsive Design: The app is designed to be responsive and adapt to various screen sizes, providing a consistent user experience
