@@ -24,17 +24,17 @@
 			singleContainerFullSize="false" >
 			<f:content>
 				<Label text="{i18n>productName}" />
-				<Input value="{oAddOrderModel>/ProductName}" />
-				<Label text="{i18n>quantityPerUnit}" />
-				<Input value="{oAddOrderModel>/QuantityPerUnit}" type="Number" />
-				<Label text="{i18n>unitPrice}" />
-				<Input value="{oAddOrderModel>/UnitPrice}" />
-				<Label text="{i18n>unitsInStock}" />
-				<Input value="{oAddOrderModel>/UnitsInStock}" type="Number" />
-				<Label text="{i18n>unitsOnOrder}" />
-				<Input value="{oAddOrderModel>/UnitsOnOrder}" type="Number" />
-				<Label text="{i18n>supplierID}" />
-				<Input value="{oAddOrderModel>/SupplierID}" />
+				<Input value="{oAddProductModel>/Name}" type="Text" enabled="true" />
+				<Label text="{i18n>productDescription}" />
+				<Input value="{oAddProductModel>/Description}" type="Text" enabled="true" />
+				<Label text="{i18n>price}" />
+				<Input value="{oAddProductModel>/Price}" type="Number" enabled="true" />
+				<Label text="{i18n>releaseDate}" />
+				<DatePicker value="{
+					path: 'oAddProductModel>/ReleaseDate',
+					formatter: '.formatter.formatDate'
+					}" 
+					enabled="false"/>
 			</f:content>
 		</f:SimpleForm>
 		</content>

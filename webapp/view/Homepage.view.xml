@@ -53,28 +53,36 @@
 					<f:content>
                         <fb:FilterBar id="filterbar" persistencyKey="myPersKey" useToolbar="false" search=".onSearch" filterChange=".onFilterChange" showClearOnFB="true">
 							<fb:filterGroupItems>
-								<fb:FilterGroupItem name="Product Name" label="{i18n>productName}" groupName="Group1" visibleInFilterBar="true">
-									<fb:control>
-										<MultiInput
-                                            id="idFBProductName"
-                                            change="onSearch"
-                                            placeholder="{i18n>enterProductName}">
-	                                	</MultiInput>
-									</fb:control>
-								</fb:FilterGroupItem>
-								<fb:FilterGroupItem name="Supplier ID" label="{i18n>supplierID}" groupName="Group1" visibleInFilterBar="true">
+								<fb:FilterGroupItem name="Product ID" label="{i18n>productID}" groupName="Group1" visibleInFilterBar="true">
 									<fb:control>
 										<MultiComboBox
-                                            id="idFBSupplierID"
-                                            placeholder="{i18n>enterSupplierID}"
-                                            selectionChange="handleSelectionChange"
-                                            selectionFinish="handleSelectionFinish"
+                                            id="idFBProductID"
+                                            placeholder="{i18n>enterProductID}"
+											required="false"
                                             showSelectAll="true"
                                             items="{
-                                                path: 'oOrdersModel>/Products'
+                                                path: 'oProductsModel>/Products'
                                             }">
-                                            <core:Item key="{oOrdersModel>SupplierID}" text="{oOrdersModel>SupplierID}"/>
+                                            <core:Item key="{oProductsModel>ID}" text="{oProductsModel>ID}"/>
                                         </MultiComboBox>
+									</fb:control>
+								</fb:FilterGroupItem>
+								<fb:FilterGroupItem name="Product Name" label="{i18n>productName}" groupName="Group1" visibleInFilterBar="true">
+									<fb:control>
+										<Input
+                                            id="idFBProductName"
+                                            placeholder="{i18n>enterProductName}"
+											required="false">
+	                                	</Input>
+									</fb:control>
+								</fb:FilterGroupItem>
+								<fb:FilterGroupItem name="Release Date" label="{i18n>releaseDate}" groupName="Group1" visibleInFilterBar="true">
+									<fb:control>
+										<DatePicker
+                                            id="idFBReleaseDate"
+                                            placeholder="{i18n>enterReleaseDate}"
+											required="false">
+	                                	</DatePicker>
 									</fb:control>
 								</fb:FilterGroupItem>
 							</fb:filterGroupItems>
@@ -83,11 +91,11 @@
 				</f:DynamicPageHeader>
 			</f:header>
 			<f:content>
-				<Table id="idOrdersTable"
+				<Table id="idProductsTable"
 						sticky="HeaderToolbar,ColumnHeaders"
 						inset="false"
 						items="{
-                            path: 'oOrdersModel>/Products'
+                            path: 'oProductsModel>/Products'
                         }"
                         mode="SingleSelectLeft"
 					    class="sapFDynamicPageAlignContent"
@@ -105,33 +113,39 @@
 					</headerToolbar>
 					<columns>
                         <Column>
+							<Text text="{i18n>productID}" />
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="true">
 							<Text text="{i18n>product}" />
 						</Column>
-						<Column minScreenWidth="Desktop" demandPopin="true">
-							<Text text="{i18n>quantityPerUnit}" />
-						</Column>
                         <Column minScreenWidth="Desktop" demandPopin="true">
-							<Text text="{i18n>unitPrice}" />
+							<Text text="{i18n>price}" />
 						</Column>
 						<Column minScreenWidth="Desktop" demandPopin="true">
-							<Text text="{i18n>unitsInStock}" />
+							<Text text="{i18n>rating}" />
 						</Column>
 						<Column minScreenWidth="Desktop" demandPopin="true">
-							<Text text="{i18n>unitsOnOrder}" />
+							<Text text="{i18n>releaseDate}" />
 						</Column>
 						<Column minScreenWidth="Desktop" demandPopin="true">
-							<Text text="{i18n>supplierID}" />
+							<Text text="{i18n>discontinuedDate}" />
 						</Column>
 					</columns>
 					<items>
 						<ColumnListItem type="Navigation" press="handleItemPress">
 							<cells>
-								<ObjectIdentifier title="{oOrdersModel>ProductID}" text="{oOrdersModel>ProductName}" />
-                                <Text text="{oOrdersModel>QuantityPerUnit}" />
-								<Text text="{oOrdersModel>UnitPrice}" /> 
-								<Text text="{oOrdersModel>UnitsInStock}" /> 
-                                <Text text="{oOrdersModel>UnitsOnOrder}" /> 
-								<Text text="{oOrdersModel>SupplierID}" />
+							 	<Text text="{oProductsModel>ID}" />
+								<ObjectIdentifier title="{oProductsModel>Name}" text="{oProductsModel>Description}" />
+								<Text text="{oProductsModel>Price}" /> 
+								<Text text="{oProductsModel>Rating}" /> 
+                                <Text text="{
+									path: 'oProductsModel>ReleaseDate',
+									formatter: '.formatter.formatDate'
+								}" /> 
+								<Text text="{
+									path: 'oProductsModel>DiscontinuedDate',
+									formatter: '.formatter.formatDate'
+								}" />
 							</cells>
 						</ColumnListItem>
 					</items>
