@@ -4,8 +4,7 @@ Welcome to the SAP Fiori Application! This app showcases how to perform Create, 
 
 # Project Overview
 
-<img width="1456" alt="Homepage" src="https://github.com/momoesse/fiori-app/assets/112439372/c0d33e6b-f228-49ed-861c-f462439113b9">
-
+<img width="1470" alt="My Fiori App - Homepage" src="https://github.com/momoesse/fiori-app/assets/112439372/f5f24b0b-14ac-4470-ba2f-dc398fce0c32">
 
 ## Features
 - CRUD Operations: Perform Create, Read, Update, and Delete operations on data from the Northwind OData services
@@ -20,5 +19,9 @@ Welcome to the SAP Fiori Application! This app showcases how to perform Create, 
 
 ## Acknowledgments
 Northwind OData services for providing the data used in the app
+
+## Resources
+- [SAPUI5 SDK](https://sapui5.hana.ondemand.com/)
+
 
 
