@@ -13,8 +13,9 @@ Welcome to the SAP Fiori Application! This app showcases how to perform Create, 
 
 ## Installation
 - Clone the repository or download the source code
-- Open the project in your preferred code editor and navigate to the project directory
+- Open the project in your preferred code editor (the recommended is SAP Business Application Studio) and navigate to the project directory
 - In order to install all modules listed on package.json file and their dependencies, run the command npm install
+- In order to retrieve data, use a public available OData service, [Northwind](https://blogs.sap.com/2021/02/12/create-fiori-app-in-business-application-studio-using-northwind-odata/), by creating a destination in the BTP cockpit
 - In order to launch the app, run the following from the generated app root folder: npm start
 
 ## Acknowledgments
