@@ -23,6 +23,8 @@ Northwind OData services for providing the data used in the app
 
 ## Resources
 - [SAPUI5 SDK](https://sapui5.hana.ondemand.com/)
+- [CRUD operations on OData services](https://blogs.sap.com/2021/02/23/crud-operations-on-odata-services-using-different-techniques.-1./)
+- [VS Code for UI5 development](https://blogs.sap.com/2021/02/03/setting-up-visual-studio-code-for-ui5-development/)
 
 
 
