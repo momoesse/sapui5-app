@@ -142,24 +142,20 @@ sap.ui.define([
                 let oDataModel = new sap.ui.model.odata.v2.ODataModel(sUrl, true),
                     that = this;
                 oDataModel.setHeaders({ "Content-ID": 1 });
-                return new Promise(function (resolve, reject) {
-                    oDataModel.create(sEntitySet, oNewProductData, {
-                        success: function (response) {
-                            resolve(response);
-                            MessageBox.success("Product successfully added", {
-                                actions: [MessageBox.Action.OK],
-                                onClose: function () {
-                                    that.handleCancelPress();
-                                    that._readProductsData();
-                                }.bind(this)
-                            });
-                        }.bind(this),
-                        error: function (error) {
-                            reject(error);
-                            MessageBox.error("Error");
-                        }.bind(this)
-                    });
-                })
+                oDataModel.create(sEntitySet, oNewProductData, {
+                    success: function (response) {
+                        MessageBox.success("Product successfully added", {
+                            actions: [MessageBox.Action.OK],
+                            onClose: function () {
+                                that.handleCancelPress();
+                                that._readProductsData();
+                            }.bind(this)
+                        });
+                    }.bind(this),
+                    error: function (error) {
+                        MessageBox.error("Error");
+                    }.bind(this)
+                });
             },
 
             handleCancelPress: function () {
@@ -205,23 +201,20 @@ sap.ui.define([
                 let oDataModel = new sap.ui.model.odata.v2.ODataModel(sUrl),
                     that = this;
                 oDataModel.setHeaders({ "Content-ID": 1 });
-                return new Promise(function (resolve, reject) {
-                    oDataModel.remove(("/Products(" + iID + ")"), {
-                        success: function (oData) {
-                            MessageBox.success("Product successfully removed", {
-                                actions: [MessageBox.Action.OK],
-                                onClose: function () {
-                                    that._readProductsData();
-                                }.bind(this)
-                            });
-                            resolve(oData);
-                        }.bind(this),
-                        error: function (error) {
-                            MessageBox.error("Error");
-                            reject(error);
-                        }.bind(this)
-                    });
-                })
+                oDataModel.remove(("/Products(" + iID + ")"), {
+                    success: function (oData) {
+                        MessageBox.success("Product successfully removed", {
+                            actions: [MessageBox.Action.OK],
+                            onClose: function () {
+                                that._readProductsData();
+                            }.bind(this)
+                        });
+                        resolve(oData);
+                    }.bind(this),
+                    error: function (error) {
+                        MessageBox.error("Error");
+                    }.bind(this)
+                });
             },
 
             handleEditSavePress: function () {
